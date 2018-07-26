@@ -1,0 +1,76 @@
+//controller//
+
+ [Route("getstdinfo/{rid:long}")]
+        [HttpGet]
+        public HttpResponseMessage GetStudentInfo([FromUri] long rid)
+        {
+            back3_for_delete.stdinfo3 std1 = new back3_for_delete.stdinfo3();
+
+            var httpres = std1.getstudentdata(rid);
+
+            return Request.CreateResponse(HttpStatusCode.OK, httpres);
+        }
+
+
+//dbobjects//
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace back3_for_delete
+{
+    public class dbobjects3
+    {
+        public class HCResponse
+        {
+            public Int64 id { get; set; }
+            public Int64 rid { get; set; }
+            public string code { get; set; }
+            public string message { get; set; }
+
+        }
+        public class stdinfo
+        {
+            public Int64 rid { get; set; }
+        }
+    }
+}
+
+//backend//
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Web;
+
+namespace back3_for_delete
+{
+    public class stdinfo3
+    {
+       
+        public DataTable getstudentdata(long rid = 0)
+        {
+            SqlConnection conn = new SqlConnection("Server=ITLAB-10_SYS37;Database=master;Integrated Security=true");
+
+            conn.Open();
+
+            DataTable dt = new DataTable();
+
+            using (SqlCommand cmd = new SqlCommand())
+            {
+                cmd.Connection = conn;
+                cmd.CommandText = "gettt";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@rid", rid);
+
+                SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                sda.Fill(dt);
+                return dt;
+            }
+        }
+    }
+}
+//
