@@ -1,6 +1,6 @@
 //controller//
 
- [Route("getstdinfo/{rid:long})]
+ [Route("getstdinfo/{rid:long}")]
         [HttpGet]
         public HttpResponseMessage GetStudentInfo([FromUri] long rid)
         {
